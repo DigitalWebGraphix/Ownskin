@@ -71,7 +71,7 @@
   /* Logo size reduced */
   .logo-wrap { text-align: center; margin-bottom: 24px; }
   .logo-wrap img {
-    max-width: 150px;
+    max-width: 120px;
     width: 100%;
     height: auto;
     display: block;
@@ -83,7 +83,7 @@
     display: flex; align-items: center; gap: 12px;
     margin: 4px 0 24px;
     color: var(--gold-light);
-    font-size: 12px;
+    font-size: 14px;
     letter-spacing: 0.12em;
   }
   .rule::before, .rule::after {
@@ -123,6 +123,8 @@
     line-height: 1.7;
     font-weight: 400;
   }
+
+  /* Event pill removed - no longer used */
 
   .card {
     background: var(--white); border-radius: 20px;
@@ -213,6 +215,8 @@
     margin-right: 4px;
     color: var(--gold-light);
   }
+
+  /* Decorative SVG removed - no .deco */
 </style>
 </head>
 <body>
@@ -228,12 +232,15 @@
 
   <div class="hero">
     <div class="eyebrow">5th April 2026 · Pune</div>
+    <!-- Single color heading: removed <em> and italic gold -->
     <h1>Claim Your Exclusive Offer</h1>
     <p class="inter-line">We’re glad you’re here.<br>Enjoy the experience curated specially for you.</p>
   </div>
 
+  <!-- event-pill removed as requested -->
+
   <div class="card">
-    <div class="card-title">Reserve Your Spot</div>
+    <!-- Made bold and slightly bigger -->
     <div class="card-sub">Enter your details to unlock an exclusive opening day offer.</div>
 
     <div class="field">
@@ -247,26 +254,30 @@
       <div class="error-msg" id="phoneErr">Please enter a valid phone number.</div>
     </div>
 
-    <button class="btn" id="submitBtn" onclick="handleSubmit()">Unlock My Exclusive Offer ✦</button>
+    <button class="btn" id="submitBtn" onclick="handleSubmit()">✦ Unlock My Exclusive Offer ✦</button>
+    <!-- Font Awesome lock icon instead of emoji -->
     <p class="privacy"><i class="fas fa-lock"></i> Your details are safe with us. No spam, ever.</p>
   </div>
 
+  <!-- Footer with Font Awesome phone icon instead of emoji, text size increased -->
   <div class="footer">
     <strong>Own Skin Dermatology &amp; Advanced Aesthetics</strong><br>
     Red Cross House, 1st Floor, Above Canara Bank<br>
     11 MG Road, Pune – 411001<br>
-    <i class="fas fa-phone-alt"></i> +91 94200 91093
+    <i class="fas fa-phone"></i> +91 94200 91093
   </div>
+
+  <!-- decorative SVG removed -->
 
 </div>
 
 <script>
   // ══════════════════════════════════════════════════
-  //  REPLACE THIS URL WITH YOUR GOOGLE APPS SCRIPT WEB APP URL
+  //  STEP 1: Paste your Google Apps Script Web App URL below
+  //  (see instructions in the guide)
   // ══════════════════════════════════════════════════
-  const SHEET_URL = "https://script.google.com/macros/s/AKfycbzyz2zGM7UaL1u3_tYZBlPa3_LPKGCpq2WiaM78lWNaN1PB3VrPxTKjGQ41qPnjOXmt/exec";
+  const SHEET_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
 
-  // Optional: store submissions locally (backup)
   const DATA_KEY = "ownskin_v4_submissions";
 
   function getSubmissions() {
@@ -279,28 +290,21 @@
     localStorage.setItem(DATA_KEY, JSON.stringify(list));
   }
 
-  // Send data to Google Apps Script (sheet + email)
   async function sendToSheet(entry) {
-    if (!SHEET_URL || SHEET_URL === "YOUR_DEPLOYED_GOOGLE_SCRIPT_URL_HERE") {
-      console.warn("Please set the correct SHEET_URL");
-      return false;
-    }
+    if (!SHEET_URL || SHEET_URL === "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") return;
     try {
-      const response = await fetch(SHEET_URL, {
+      await fetch(SHEET_URL, {
         method: "POST",
-        mode: "no-cors", // because the script returns no-cors; we don't need the response
+        mode: "no-cors",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(entry)
       });
-      // With no-cors we can't read response, but the request is sent.
-      return true;
     } catch (e) {
-      console.warn("Sheet/email sync failed:", e);
-      return false;
+      console.warn("Sheet sync failed (offline?):", e);
     }
   }
 
-  async function handleSubmit() {
+  function handleSubmit() {
     const nameEl  = document.getElementById('name');
     const phoneEl = document.getElementById('phone');
     const nameErr  = document.getElementById('nameErr');
@@ -328,18 +332,17 @@
       timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
     };
 
-    // Save locally first
-    saveLocal(entry);
+    setTimeout(async () => {
+      saveLocal(entry);
+      await sendToSheet(entry);
 
-    // Send to Google Sheet & email
-    await sendToSheet(entry);
-
-    // Redirect to the confirmation page (ownskin-congo.html)
-    const params = new URLSearchParams({
-      name: entry.name,
-      phone: entry.phone
-    });
-    window.location.href = "ownskin-congo.html?" + params.toString();
+      // ── Redirect to Congo (thank you) page ──────────
+      const params = new URLSearchParams({
+        name: entry.name,
+        phone: entry.phone
+      });
+      window.location.href = "ownskin-congo.html?" + params.toString();
+    }, 600);
   }
 
   document.addEventListener('keydown', e => { if (e.key === 'Enter') handleSubmit(); });
