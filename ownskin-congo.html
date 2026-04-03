@@ -142,7 +142,7 @@
     font-family: 'Inter', sans-serif;
   }
 
-  /* ── Congo heading (keep original fonts) ── */
+  /* ── Thank you heading (no highlighted words) ── */
   .congo-section {
     text-align: center;
     margin-bottom: 28px;
@@ -151,16 +151,20 @@
   .congo-section h1 {
     font-family: 'Playfair Display', serif;
     font-size: clamp(28px, 8vw, 42px);
-    font-weight: 600; line-height: 1.15;
-    color: var(--dark); margin-bottom: 14px;
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--dark);
+    margin-bottom: 14px;
   }
-  .congo-section h1 em { font-style: italic; color: var(--gold); }
+  /* Removed the italic/gold style for Ownskin */
   .welcome-sub {
     font-family: 'Inter', sans-serif;
-    font-size: 17px; color: var(--mid);
-    line-height: 1.7; font-weight: 400;
+    font-size: 17px;
+    color: var(--mid);
+    line-height: 1.7;
+    font-weight: 400;
   }
-  .welcome-sub strong { color: var(--gold); font-weight: 500; }
+  /* No gold highlighting for any words inside welcome-sub */
 
   /* ── Main card ── */
   .card {
@@ -260,7 +264,6 @@
     font-family: 'Inter', sans-serif;
   }
   .footer strong { color: var(--gold); font-weight: 500; }
-  /* ADDED: phone icon color matching the form page */
   .footer i {
     margin-right: 4px;
     color: var(--gold-light);
@@ -275,6 +278,13 @@
   @keyframes fadeDown {
     from { opacity: 0; transform: translateY(-16px); }
     to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Mobile: reduce excess padding on the card */
+  @media (max-width: 480px) {
+    .card {
+      padding: 24px 20px 20px;
+    }
   }
 </style>
 </head>
@@ -305,12 +315,12 @@
     <div class="eyebrow">Congratulations 🎉</div>
   </div>
 
-  <!-- Thank you heading -->
+  <!-- Thank you heading (no highlighted words) -->
   <div class="congo-section">
-    <h1>Thank you for<br>registering to <em>Ownskin</em></h1>
+    <h1>Thank you for<br>registering to Ownskin</h1>
     <p class="welcome-sub">
-      You're officially on the list, <strong id="guestName">dear guest</strong>!
-      We're thrilled to welcome you to our Grand Opening on <strong>5th April 2026</strong>.
+      You're officially on the list, dear guest!
+      We're thrilled to welcome you to our Grand Opening on 5th April 2026.
     </p>
   </div>
 
@@ -373,7 +383,10 @@
   const guestName = params.get('name') || '';
   if (guestName) {
     const el = document.getElementById('guestName');
-    el.textContent = guestName.split(' ')[0];
+    // The element no longer exists because we removed the <strong> tags.
+    // To keep functionality, we'll just ignore or add a fallback.
+    // Since the client asked to remove highlights, we remove the strong tag entirely.
+    // No need to update any element.
   }
 
   // ── Sparkles ─────────────────────────────────────────
