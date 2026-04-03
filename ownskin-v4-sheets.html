@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Own Skin — Exclusive Opening Offer</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Cormorant+Garamond:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Cormorant+Garamond:wght@300;400;500&family=DM+Sans:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -96,6 +96,14 @@
     font-family: 'Cormorant Garamond', serif;
     font-size: 16px; color: var(--mid);
     line-height: 1.7; font-weight: 400;
+  }
+  /* Inter font for the specific line */
+  .hero .inter-line {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: var(--mid);
+    line-height: 1.7;
+    font-weight: 400;
   }
 
   .event-pill {
@@ -193,7 +201,8 @@
   <div class="hero">
     <div class="eyebrow">5th April 2026 · Pune</div>
     <h1>Claim Your<br><em>Exclusive</em> Offer</h1>
-    <p>We’re glad you’re here. Enjoy the experience curated specially for you.<br></p>
+    <!-- Modified: line break before "Enjoy" and applied Inter font -->
+    <p class="inter-line">We’re glad you’re here.<br>Enjoy the experience curated specially for you.</p>
   </div>
 
   <div class="event-pill">
