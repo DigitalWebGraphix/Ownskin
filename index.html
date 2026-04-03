@@ -68,7 +68,6 @@
     to   { opacity:1; transform:translateY(0); }
   }
 
-  /* Logo size reduced */
   .logo-wrap { text-align: center; margin-bottom: 24px; }
   .logo-wrap img {
     max-width: 150px;
@@ -78,12 +77,11 @@
     margin: 0 auto;
   }
 
-  /* Rule and eyebrow same size */
   .rule {
     display: flex; align-items: center; gap: 12px;
     margin: 4px 0 24px;
     color: var(--gold-light);
-    font-size: 14px;
+    font-size: 12px;
     letter-spacing: 0.12em;
   }
   .rule::before, .rule::after {
@@ -108,14 +106,11 @@
     color: var(--dark);
     margin-bottom: 12px;
   }
-  /* Single color for heading - removed gold italic */
-  .hero h1 span { font-style: normal; }
   .hero p {
     font-family: 'Cormorant Garamond', serif;
     font-size: 16px; color: var(--mid);
     line-height: 1.7; font-weight: 400;
   }
-  /* Inter font for the specific line */
   .hero .inter-line {
     font-family: 'Inter', sans-serif;
     font-size: 16px;
@@ -142,7 +137,6 @@
     font-size: 19px; font-weight: 600;
     color: var(--dark); margin-bottom: 5px;
   }
-  /* Card subtext - bold and slightly bigger */
   .card-sub {
     font-size: 15px;
     color: var(--mid);
@@ -188,7 +182,6 @@
   .btn:active { transform: translateY(0); }
   .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
-  /* Privacy text with Font Awesome icon */
   .privacy {
     text-align: center;
     font-size: 11.5px;
@@ -200,7 +193,6 @@
     color: var(--gold-light);
   }
 
-  /* Footer enlarged */
   .footer {
     text-align: center;
     margin-top: 28px;
@@ -219,7 +211,6 @@
 
 <div class="page">
 
-  <!-- Logo (reduced size) -->
   <div class="logo-wrap">
     <img src="images/logo.png" alt="Own Skin Dermatology & Advanced Aesthetics">
   </div>
@@ -255,14 +246,14 @@
     <strong>Own Skin Dermatology &amp; Advanced Aesthetics</strong><br>
     Red Cross House, 1st Floor, Above Canara Bank<br>
     11 MG Road, Pune – 411001<br>
-    <i class="fas fa-phone"></i> +91 94200 91093
+    <i class="fas fa-phone-alt"></i> +91 94200 91093
   </div>
 
 </div>
 
 <script>
-  // === CORRECT WEB APP URL (must be deployed with "Anyone" access) ===
-  const SHEET_URL = "https://script.google.com/macros/s/AKfycbxZFCu5WRtrr_M7GRbQUUSJqH7XpUdcvuP_nstoFQFvCUFhuHeo3_NUHyrn2MZxGDaJ/exec";
+  // ⬇️ REPLACE THIS URL WITH YOUR DEPLOYED GOOGLE APPS SCRIPT WEB APP URL ⬇️
+  const SHEET_URL = "https://script.google.com/macros/s/AKfycbyEVAFbNZ6Kta27crkP8GCpbRhaLBKqilmMoRaii3O5XihjnAlNt42Jom1j9vaCMnZw/exec";
 
   const DATA_KEY = "ownskin_v4_submissions";
 
@@ -276,22 +267,16 @@
     localStorage.setItem(DATA_KEY, JSON.stringify(list));
   }
 
-  // Send data using proper CORS fetch (no 'no-cors' – we need to see the response)
   async function sendToSheet(entry) {
     try {
       const response = await fetch(SHEET_URL, {
         method: "POST",
-        mode: "cors",               // important: allows reading response
+        mode: "cors",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(entry)
       });
       const result = await response.json();
-      if (result.result === "success") {
-        return true;
-      } else {
-        console.error("Server error:", result.error);
-        return false;
-      }
+      return result.result === "success";
     } catch (e) {
       console.error("Fetch error:", e);
       return false;
@@ -318,7 +303,7 @@
 
     const btn = document.getElementById('submitBtn');
     btn.disabled = true;
-    btn.textContent = 'Sending…';
+    btn.textContent = 'Sending…';   // changed from "Saving…"
 
     const entry = {
       name: nameEl.value.trim(),
@@ -326,15 +311,8 @@
       timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
     };
 
-    // Save locally first (backup)
-    saveLocal(entry);
-
-    // Send to Google Sheet & email – wait for completion
-    const success = await sendToSheet(entry);
-    if (!success) {
-      // Optionally show a message to user, but still redirect
-      console.warn("Data might not have been saved to sheet/email.");
-    }
+    saveLocal(entry);               // backup locally
+    await sendToSheet(entry);       // send to sheet & email
 
     // Redirect to thank you page
     const params = new URLSearchParams({
