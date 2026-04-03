@@ -12,7 +12,7 @@
 
   :root {
     --cream: #f0ebe2;
-    --gold: #b8922a;
+    --gold: #b99f68;
     --gold-light: #c8a96e;
     --dark: #2c2412;
     --mid: #6b5c3e;
@@ -68,6 +68,13 @@
     to   { opacity:1; transform:translateY(0); }
   }
 
+  /* Logo details:
+     - max-width: 150px (logo never exceeds 150px in width)
+     - width: 100% (scales down on smaller screens)
+     - height: auto (maintains aspect ratio)
+     - The actual pixel size depends on your uploaded image (images/logo.png).
+       If the original is e.g. 500px wide, it will display at max 150px wide.
+     - No fixed height, so it remains proportional. */
   .logo-wrap { text-align: center; margin-bottom: 24px; }
   .logo-wrap img {
     max-width: 150px;
@@ -77,12 +84,16 @@
     margin: 0 auto;
   }
 
+  /* ✦ Grand Opening ✦ - now uses Inter font */
   .rule {
-    display: flex; align-items: center; gap: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
     margin: 4px 0 24px;
-    color: var(--gold-light);
+    color: var(--gold);
     font-size: 12px;
     letter-spacing: 0.12em;
+    font-family: 'Inter', sans-serif;  /* changed to Inter */
   }
   .rule::before, .rule::after {
     content: ''; flex: 1; height: 1px;
@@ -90,6 +101,7 @@
   }
 
   .hero { text-align: center; margin-bottom: 26px; }
+  /* 5th April 2026 · Pune - now uses Inter font */
   .eyebrow {
     font-size: 12px;
     letter-spacing: 0.18em;
@@ -97,6 +109,7 @@
     color: var(--gold);
     font-weight: 500;
     margin-bottom: 14px;
+    font-family: 'Inter', sans-serif;  /* changed to Inter */
   }
   .hero h1 {
     font-family: 'Playfair Display', serif;
@@ -106,6 +119,7 @@
     color: var(--dark);
     margin-bottom: 12px;
   }
+  /* The two lines below already use Inter via .inter-line */
   .hero p {
     font-family: 'Cormorant Garamond', serif;
     font-size: 16px; color: var(--mid);
@@ -211,15 +225,17 @@
 
 <div class="page">
 
-  <div class="logo-wrap">
+<div class="logo-wrap">
+  <a href="https://ownskin.co.in/" target="_blank" rel="noopener noreferrer" style="display: inline-block; text-decoration: none;">
     <img src="images/logo.png" alt="Own Skin Dermatology & Advanced Aesthetics">
-  </div>
+  </a>
+</div>
 
   <div class="rule">✦ Grand Opening ✦</div>
 
   <div class="hero">
     <div class="eyebrow">5th April 2026 · Pune</div>
-    <h1>Claim Your Exclusive Offer</h1>
+    <h1>Claim Your </br> Exclusive Offer</h1>
     <p class="inter-line">We’re glad you’re here.<br>Enjoy the experience curated specially for you.</p>
   </div>
 
@@ -237,16 +253,17 @@
       <div class="error-msg" id="phoneErr">Please enter a valid phone number.</div>
     </div>
 
-    <button class="btn" id="submitBtn" onclick="handleSubmit()">Unlock My Exclusive Offer ✦</button>
+    <button class="btn" id="submitBtn" onclick="handleSubmit()">✦ Unlock My Exclusive Offer ✦</button>
     <p class="privacy"><i class="fas fa-lock"></i> Your details are safe with us. No spam, ever.</p>
   </div>
 
-  <div class="footer">
-    <strong>Own Skin Dermatology &amp; Advanced Aesthetics</strong><br>
-    Red Cross House, 1st Floor, Above Canara Bank<br>
-    11 MG Road, Pune – 411001<br>
-    <i class="fas fa-phone"></i> +91 94200 91093
-  </div>
+<div class="footer">
+  <strong>Own Skin Dermatology &amp; Advanced Aesthetics</strong><br>
+  Red Cross House, 1st Floor, Above Canara Bank<br>
+  11 MG Road, Pune – 411001<br>
+  <i class="fas fa-phone"></i> 
+  <a href="tel:+919420091093" style="text-decoration: none; color: inherit;">+91 94200 91093</a>
+</div>
 
 </div>
 
