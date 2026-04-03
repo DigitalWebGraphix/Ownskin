@@ -142,7 +142,7 @@
     font-family: 'Inter', sans-serif;
   }
 
-  /* ── Thank you heading (no highlighted words) ── */
+  /* ── Thank you heading (Ownskin in gold, italic) ── */
   .congo-section {
     text-align: center;
     margin-bottom: 28px;
@@ -156,7 +156,10 @@
     color: var(--dark);
     margin-bottom: 14px;
   }
-  /* Removed the italic/gold style for Ownskin */
+  .congo-section h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
   .welcome-sub {
     font-family: 'Inter', sans-serif;
     font-size: 17px;
@@ -164,7 +167,7 @@
     line-height: 1.7;
     font-weight: 400;
   }
-  /* No gold highlighting for any words inside welcome-sub */
+  /* No gold highlighting for any other words */
 
   /* ── Main card ── */
   .card {
@@ -315,9 +318,9 @@
     <div class="eyebrow">Congratulations 🎉</div>
   </div>
 
-  <!-- Thank you heading (no highlighted words) -->
+  <!-- Thank you heading: "Ownskin" in gold italic, rest plain -->
   <div class="congo-section">
-    <h1>Thank you for<br>registering to Ownskin</h1>
+    <h1>Thank you for<br>registering to <em>Ownskin</em></h1>
     <p class="welcome-sub">
       You're officially on the list, dear guest!
       We're thrilled to welcome you to our Grand Opening on 5th April 2026.
@@ -382,11 +385,9 @@
   const params = new URLSearchParams(window.location.search);
   const guestName = params.get('name') || '';
   if (guestName) {
-    const el = document.getElementById('guestName');
-    // The element no longer exists because we removed the <strong> tags.
-    // To keep functionality, we'll just ignore or add a fallback.
-    // Since the client asked to remove highlights, we remove the strong tag entirely.
-    // No need to update any element.
+    // The <strong> tag has been removed, so we do nothing.
+    // If you still want to show the name somewhere, you could add a span.
+    // For now, it's omitted per the "no highlighting" request.
   }
 
   // ── Sparkles ─────────────────────────────────────────
