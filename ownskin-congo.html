@@ -76,18 +76,14 @@
     position: relative; z-index: 1;
   }
 
-  /* ── Logo ── */
+  /* ── Logo (replaced with image) ── */
   .logo-wrap { text-align: center; margin-bottom: 24px; animation: fadeDown 0.7s ease both; }
-  .logo-text {
-    font-family: 'Playfair Display', serif;
-    font-size: 36px; font-weight: 600;
-    color: var(--dark); letter-spacing: 0.06em;
-  }
-  .logo-text em { font-style: italic; color: var(--gold); }
-  .sub-tag {
-    font-size: 10.5px; letter-spacing: 0.16em;
-    text-transform: uppercase; color: var(--muted);
-    font-weight: 500; margin-top: 4px;
+  .logo-wrap img {
+    max-width: 220px;
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
   }
 
   .rule {
@@ -272,10 +268,9 @@
 
 <div class="page">
 
-  <!-- Logo -->
+  <!-- Logo: replaced text with image logo -->
   <div class="logo-wrap">
-    <div class="logo-text">Own<em>Skin</em></div>
-    <div class="sub-tag">Dermatology &amp; Advanced Aesthetics</div>
+    <img src="images/logo.png" alt="Own Skin Dermatology & Advanced Aesthetics">
   </div>
 
   <div class="rule">✦ You're In ✦</div>
