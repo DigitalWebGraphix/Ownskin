@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Own Skin — You're In! 🎉</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Cormorant+Garamond:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #f0ebe2;
+    --gold: #b8922a;
+    --gold-light: #c8a96e;
+    --dark: #2c2412;
+    --mid: #6b5c3e;
+    --muted: #9a8a72;
+    --white: #fdfaf5;
+    --line: #d9cdb8;
+  }
+
+  html, body {
+    min-height: 100vh;
+    background: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* ── Confetti burst BG ── */
+  body::before {
+    content: '';
+    position: fixed;
+    bottom: -80px; right: -80px;
+    width: 440px; height: 440px;
+    background: radial-gradient(circle, rgba(184,146,42,0.12) 0%, transparent 65%);
+    border-radius: 50%;
+    pointer-events: none; z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    top: -80px; left: -80px;
+    width: 340px; height: 340px;
+    background: radial-gradient(circle, rgba(184,146,42,0.09) 0%, transparent 65%);
+    border-radius: 50%;
+    pointer-events: none; z-index: 0;
+  }
+
+  /* Floating sparkles */
+  .sparkles {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+  }
+  .sparkle {
+    position: absolute;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0;
+    animation: floatUp var(--dur, 4s) var(--delay, 0s) infinite ease-in-out;
+  }
+  @keyframes floatUp {
+    0%   { opacity: 0; transform: translateY(0) scale(0.5); }
+    20%  { opacity: 0.6; }
+    80%  { opacity: 0.2; }
+    100% { opacity: 0; transform: translateY(-120px) scale(1.2); }
+  }
+
+  .page {
+    width: 100%; max-width: 480px;
+    position: relative; z-index: 1;
+  }
+
+  /* ── Logo ── */
+  .logo-wrap { text-align: center; margin-bottom: 24px; animation: fadeDown 0.7s ease both; }
+  .logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px; font-weight: 600;
+    color: var(--dark); letter-spacing: 0.06em;
+  }
+  .logo-text em { font-style: italic; color: var(--gold); }
+  .sub-tag {
+    font-size: 10.5px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--muted);
+    font-weight: 500; margin-top: 4px;
+  }
+
+  .rule {
+    display: flex; align-items: center; gap: 12px;
+    margin: 4px 0 30px; color: var(--gold-light);
+    font-size: 11px; letter-spacing: 0.12em;
+    animation: fadeDown 0.7s 0.1s ease both;
+  }
+  .rule::before, .rule::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold-light), transparent);
+  }
+
+  /* ── Big check badge ── */
+  .check-badge {
+    width: 88px; height: 88px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #f7efdf, #ede3c8);
+    border: 2px solid var(--gold-light);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 24px;
+    box-shadow: 0 8px 32px rgba(184,146,42,0.2), 0 2px 8px rgba(184,146,42,0.12);
+    animation: popIn 0.65s 0.15s cubic-bezier(.34,1.56,.64,1) both;
+  }
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.5); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  .check-badge svg { stroke: var(--gold); }
+
+  /* ── Congo heading ── */
+  .congo-section {
+    text-align: center;
+    margin-bottom: 28px;
+    animation: fadeUp 0.65s 0.25s ease both;
+  }
+  .eyebrow {
+    font-size: 10.5px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--gold);
+    font-weight: 500; margin-bottom: 14px;
+  }
+  .congo-section h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 8vw, 42px);
+    font-weight: 600; line-height: 1.15;
+    color: var(--dark); margin-bottom: 14px;
+  }
+  .congo-section h1 em { font-style: italic; color: var(--gold); }
+  .welcome-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px; color: var(--mid);
+    line-height: 1.7; font-weight: 400;
+  }
+  .welcome-sub strong { color: var(--gold); font-weight: 500; }
+
+  /* ── Main card ── */
+  .card {
+    background: var(--white); border-radius: 20px;
+    padding: 36px 30px 30px;
+    border: 1px solid var(--line);
+    box-shadow: 0 4px 32px rgba(44,36,18,0.08), 0 1px 4px rgba(44,36,18,0.04);
+    position: relative; overflow: hidden;
+    animation: fadeUp 0.65s 0.35s ease both;
+  }
+  .card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+  }
+
+  /* ── Offer ribbon ── */
+  .offer-ribbon {
+    background: linear-gradient(135deg, #f7f0e4, #ede3c8);
+    border: 1.5px dashed var(--gold-light);
+    border-radius: 14px; padding: 22px 22px 20px;
+    margin-bottom: 26px;
+  }
+  .offer-tag {
+    font-size: 9.5px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--gold);
+    font-weight: 700; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .offer-tag::after { content: ''; flex: 1; height: 1px; background: var(--gold-light); opacity: 0.5; }
+  .offer-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 600;
+    color: var(--dark); line-height: 1.3;
+    margin-bottom: 10px;
+  }
+  .offer-note {
+    font-size: 12.5px; color: var(--mid);
+    line-height: 1.7;
+  }
+
+  /* ── What to expect list ── */
+  .expect-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px; font-weight: 600;
+    color: var(--dark); margin-bottom: 16px;
+  }
+  .expect-list { list-style: none; }
+  .expect-list li {
+    display: flex; align-items: flex-start;
+    gap: 12px; padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 13.5px; color: var(--mid); line-height: 1.5;
+  }
+  .expect-list li:last-child { border-bottom: none; }
+  .expect-list .icon {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: linear-gradient(135deg, #f0e8d2, #e8dcbe);
+    border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 14px; margin-top: 1px;
+  }
+  .expect-list strong { color: var(--dark); font-weight: 500; display: block; font-size: 13px; }
+
+  /* ── Event box ── */
+  .event-box {
+    background: var(--dark); border-radius: 14px;
+    padding: 18px 20px; margin-top: 22px;
+    display: flex; align-items: center; gap: 16px;
+    color: var(--cream);
+  }
+  .event-icon { font-size: 26px; flex-shrink: 0; }
+  .event-detail { flex: 1; }
+  .event-date {
+    font-size: 11.5px; color: var(--gold-light);
+    letter-spacing: 0.1em; text-transform: uppercase;
+    font-weight: 500; margin-bottom: 4px;
+  }
+  .event-addr {
+    font-size: 13px; color: var(--cream);
+    line-height: 1.55; font-weight: 300;
+  }
+
+  /* ── Share row ── */
+  .share-row {
+    display: flex; gap: 10px; margin-top: 22px;
+  }
+  .share-btn {
+    flex: 1; padding: 12px 8px;
+    border-radius: 10px; border: 1.5px solid var(--line);
+    background: var(--cream); color: var(--dark);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12.5px; font-weight: 500;
+    cursor: pointer; text-align: center;
+    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .share-btn:hover { background: var(--white); border-color: var(--gold-light); transform: translateY(-1px); }
+  .share-btn.gold {
+    background: var(--gold); color: #fff; border-color: var(--gold);
+    box-shadow: 0 4px 14px rgba(184,146,42,0.25);
+  }
+  .share-btn.gold:hover { background: #a07820; border-color: #a07820; }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center; margin-top: 28px;
+    font-size: 12px; color: var(--muted); line-height: 1.85;
+  }
+  .footer strong { color: var(--gold); font-weight: 500; }
+
+  .deco { text-align: center; margin-top: 20px; opacity: 0.15; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating sparkles -->
+<div class="sparkles" id="sparkles"></div>
+
+<div class="page">
+
+  <!-- Logo -->
+  <div class="logo-wrap">
+    <div class="logo-text">Own<em>Skin</em></div>
+    <div class="sub-tag">Dermatology &amp; Advanced Aesthetics</div>
+  </div>
+
+  <div class="rule">✦ You're In ✦</div>
+
+  <!-- Check badge + heading -->
+  <div class="check-badge">
+    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"/>
+    </svg>
+  </div>
+
+  <div class="congo-section">
+    <div class="eyebrow">Congratulations 🎉</div>
+    <h1>Welcome to<br><em>Own Skin!</em></h1>
+    <p class="welcome-sub">
+      You're officially on the list, <strong id="guestName">dear guest</strong>!
+      We're thrilled to welcome you to our Grand Opening on <strong>5th April 2026</strong>.
+    </p>
+  </div>
+
+  <!-- Main card -->
+  <div class="card">
+
+    <!-- Offer ribbon -->
+    <div class="offer-ribbon">
+      <div class="offer-tag">✦ Your Exclusive Opening Gift</div>
+      <div class="offer-title">A Special Surprise Awaits You</div>
+      <div class="offer-note">
+        Simply <strong>show this screen</strong> at the clinic on 5th April 2026 to redeem your exclusive opening day offer. Our team will also reach out to you shortly at your registered number.
+      </div>
+    </div>
+
+    <!-- What to expect -->
+    <div class="expect-title">What to Expect on the Day</div>
+    <ul class="expect-list">
+      <li>
+        <span class="icon">✨</span>
+        <span><strong>Exclusive Opening Offers</strong>Specially curated packages available only on the day.</span>
+      </li>
+      <li>
+        <span class="icon">🏥</span>
+        <span><strong>Clinic Tour</strong>Meet our expert dermatologists and see our state-of-the-art facility.</span>
+      </li>
+      <li>
+        <span class="icon">🧴</span>
+        <span><strong>Skin Consultations</strong>Free personalised skin assessment for every guest.</span>
+      </li>
+      <li>
+        <span class="icon">🥂</span>
+        <span><strong>Refreshments</strong>Enjoy light bites and beverages while you explore.</span>
+      </li>
+    </ul>
+
+    <!-- Event box -->
+    <div class="event-box">
+      <span class="event-icon">📍</span>
+      <div class="event-detail">
+        <div class="event-date">Sunday · 5th April 2026 · 3 PM – 5 PM</div>
+        <div class="event-addr">Red Cross House, 1st Floor, Above Canara Bank<br>11 MG Road, Pune – 411001</div>
+      </div>
+    </div>
+
+    <!-- Share row -->
+    <div class="share-row">
+      <button class="share-btn" onclick="shareWhatsApp()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Share on WhatsApp
+      </button>
+      <button class="share-btn gold" onclick="addToCalendar()">
+        📅 Add to Calendar
+      </button>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <strong>Own Skin Dermatology &amp; Advanced Aesthetics</strong><br>
+    Red Cross House, 1st Floor, Above Canara Bank<br>
+    11 MG Road, Pune – 411001<br>
+    📞 70576 88787 &nbsp;/&nbsp; 91126 89785
+  </div>
+
+  <div class="deco">
+    <svg width="80" height="50" viewBox="0 0 80 50" fill="none">
+      <ellipse cx="25" cy="25" rx="22" ry="14" fill="#b8922a" transform="rotate(-20 25 25)"/>
+      <ellipse cx="55" cy="25" rx="22" ry="14" fill="#b8922a" transform="rotate(20 55 25)"/>
+      <ellipse cx="25" cy="30" rx="14" ry="9" fill="#c8a96e" transform="rotate(10 25 30)"/>
+      <ellipse cx="55" cy="30" rx="14" ry="9" fill="#c8a96e" transform="rotate(-10 55 30)"/>
+      <line x1="40" y1="10" x2="40" y2="45" stroke="#b8922a" stroke-width="1.5"/>
+    </svg>
+  </div>
+
+</div>
+
+<script>
+  // ── Read guest name from URL ──────────────────────────
+  const params = new URLSearchParams(window.location.search);
+  const guestName = params.get('name') || '';
+  if (guestName) {
+    const el = document.getElementById('guestName');
+    el.textContent = guestName.split(' ')[0];
+  }
+
+  // ── Sparkles ─────────────────────────────────────────
+  const sparkleContainer = document.getElementById('sparkles');
+  for (let i = 0; i < 18; i++) {
+    const s = document.createElement('div');
+    s.className = 'sparkle';
+    s.style.cssText = `
+      left: ${Math.random() * 100}%;
+      top: ${60 + Math.random() * 40}%;
+      --dur: ${3 + Math.random() * 3}s;
+      --delay: ${Math.random() * 3}s;
+      width: ${4 + Math.random() * 6}px;
+      height: ${4 + Math.random() * 6}px;
+      opacity: ${0.3 + Math.random() * 0.4};
+    `;
+    sparkleContainer.appendChild(s);
+  }
+
+  // ── Share WhatsApp ────────────────────────────────────
+  function shareWhatsApp() {
+    const msg = encodeURIComponent(
+      "🌟 I just registered for Own Skin's Grand Opening on 5th April!\n" +
+      "📍 11 MG Road, Pune | 3 PM – 5 PM\n\n" +
+      "Free skin consultations + exclusive offers. Join me! 💛"
+    );
+    window.open("https://wa.me/?text=" + msg, "_blank");
+  }
+
+  // ── Add to Calendar (Google Calendar) ────────────────
+  function addToCalendar() {
+    const start = "20260405T150000";
+    const end   = "20260405T170000";
+    const text  = encodeURIComponent("Own Skin Grand Opening 🌟");
+    const loc   = encodeURIComponent("11 MG Road, Pune 411001");
+    const details = encodeURIComponent("Free skin consultations, exclusive opening offers, clinic tour & refreshments.");
+    const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${text}&dates=${start}/${end}&location=${loc}&details=${details}`;
+    window.open(url, "_blank");
+  }
+</script>
+</body>
+</html>
