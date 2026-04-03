@@ -67,14 +67,7 @@
     from { opacity:0; transform:translateY(28px); }
     to   { opacity:1; transform:translateY(0); }
   }
-
-  /* Logo details:
-     - max-width: 150px (logo never exceeds 150px in width)
-     - width: 100% (scales down on smaller screens)
-     - height: auto (maintains aspect ratio)
-     - The actual pixel size depends on your uploaded image (images/logo.png).
-       If the original is e.g. 500px wide, it will display at max 150px wide.
-     - No fixed height, so it remains proportional. */
+  
   .logo-wrap { text-align: center; margin-bottom: 24px; }
   .logo-wrap img {
     max-width: 150px;
@@ -218,6 +211,13 @@
   .footer i {
     margin-right: 4px;
     color: var(--gold-light);
+  }
+
+  /* Mobile-specific: reduce card padding on screens up to 480px */
+  @media (max-width: 480px) {
+    .card {
+      padding: 24px 20px 20px;
+    }
   }
 </style>
 </head>
