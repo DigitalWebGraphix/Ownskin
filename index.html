@@ -261,12 +261,9 @@
 </div>
 
 <script>
-  // ══════════════════════════════════════════════════
-  //  REPLACE THIS URL WITH YOUR GOOGLE APPS SCRIPT WEB APP URL
-  // ══════════════════════════════════════════════════
-  const SHEET_URL = "https://script.google.com/macros/s/AKfycbzyz2zGM7UaL1u3_tYZBlPa3_LPKGCpq2WiaM78lWNaN1PB3VrPxTKjGQ41qPnjOXmt/exec";
+  // === CORRECT WEB APP URL (must be deployed with "Anyone" access) ===
+  const SHEET_URL = "https://script.google.com/macros/s/AKfycbw3tqjROYfLX33JpCeB_4f3zPGCHyqlauiEOHtVhb5zckiPwLESYXkhPeQ2ezsEvfM/exec";
 
-  // Optional: store submissions locally (backup)
   const DATA_KEY = "ownskin_v4_submissions";
 
   function getSubmissions() {
@@ -279,23 +276,24 @@
     localStorage.setItem(DATA_KEY, JSON.stringify(list));
   }
 
-  // Send data to Google Apps Script (sheet + email)
+  // Send data using proper CORS fetch (no 'no-cors' – we need to see the response)
   async function sendToSheet(entry) {
-    if (!SHEET_URL || SHEET_URL === "YOUR_DEPLOYED_GOOGLE_SCRIPT_URL_HERE") {
-      console.warn("Please set the correct SHEET_URL");
-      return false;
-    }
     try {
       const response = await fetch(SHEET_URL, {
         method: "POST",
-        mode: "no-cors", // because the script returns no-cors; we don't need the response
+        mode: "cors",               // important: allows reading response
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(entry)
       });
-      // With no-cors we can't read response, but the request is sent.
-      return true;
+      const result = await response.json();
+      if (result.result === "success") {
+        return true;
+      } else {
+        console.error("Server error:", result.error);
+        return false;
+      }
     } catch (e) {
-      console.warn("Sheet/email sync failed:", e);
+      console.error("Fetch error:", e);
       return false;
     }
   }
@@ -328,13 +326,17 @@
       timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
     };
 
-    // Save locally first
+    // Save locally first (backup)
     saveLocal(entry);
 
-    // Send to Google Sheet & email
-    await sendToSheet(entry);
+    // Send to Google Sheet & email – wait for completion
+    const success = await sendToSheet(entry);
+    if (!success) {
+      // Optionally show a message to user, but still redirect
+      console.warn("Data might not have been saved to sheet/email.");
+    }
 
-    // Redirect to the confirmation page (ownskin-congo.html)
+    // Redirect to thank you page
     const params = new URLSearchParams({
       name: entry.name,
       phone: entry.phone
