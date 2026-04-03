@@ -269,14 +269,16 @@
 
   async function sendToSheet(entry) {
     try {
-      const response = await fetch(SHEET_URL, {
+      await fetch(SHEET_URL, {
         method: "POST",
-        mode: "cors",
-        headers: { "Content-Type": "application/json" },
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "text/plain;charset=UTF-8"
+        },
         body: JSON.stringify(entry)
       });
-      const result = await response.json();
-      return result.result === "success";
+
+      return true;
     } catch (e) {
       console.error("Fetch error:", e);
       return false;
@@ -303,7 +305,7 @@
 
     const btn = document.getElementById('submitBtn');
     btn.disabled = true;
-    btn.textContent = 'Sending…';   // changed from "Saving…"
+    btn.textContent = 'Sending…';
 
     const entry = {
       name: nameEl.value.trim(),
@@ -311,10 +313,9 @@
       timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
     };
 
-    saveLocal(entry);               // backup locally
-    await sendToSheet(entry);       // send to sheet & email
+    saveLocal(entry);
+    await sendToSheet(entry);
 
-    // Redirect to thank you page
     const params = new URLSearchParams({
       name: entry.name,
       phone: entry.phone
